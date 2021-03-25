@@ -8,7 +8,7 @@
 
 > Some details
 ---
-### Reqiremnts
+### Requirements
 ---
 * `python3`
 * `pandas`
@@ -27,7 +27,7 @@ $ git https://github.com/m-shiroi/Heimdallr-project.git .
 $ git checkout devel
 $ python3 install.py
 ```
-(close console) <br>
+* (close console) <br>
 ---
 ### Test
 ---
@@ -35,17 +35,17 @@ $ python3 install.py
 $ ping www.facebook.com #get ip address of facebook
 $ hmdl -a <facebookIPv4> <your current networking interface>
 ```
-After this command IPv4 www.facebook.com should be blocked <br>
-You can check it with ping <br>
+* After this command IPv4 www.facebook.com should be blocked <br>
+* You can check it with ping <br>
 ```bash
 $ hmdl -d <facebookIPv4> <your current networking interface>
 ```
-After this command IPv4 www.facebook.com should be unblocked <br>
-You can check it with ping <br>
+* After this command IPv4 `www.facebook.com` should be unblocked <br>
+* You can check it with ping <br>
 ---
 ### Uninstallation
 ---
-Move to ther root of project <br>
+* Move to ther root of project <br>
 ```bash
 $ python3 uninstall.py
 ```
