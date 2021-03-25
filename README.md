@@ -29,13 +29,13 @@ $ python3 install.py
 ### Test
 ---
 ```bash
-ping www.facebook.com #get ip address of facebook
-hmdl -a <facebookIPv4> <your current networking interface>
+$ ping www.facebook.com #get ip address of facebook
+$ hmdl -a <facebookIPv4> <your current networking interface>
 ```
 After this command IPv4 www.facebook.com should be blocked <br>
 You can check it with ping <br>
 ```bash
-hmdl -d <facebookIPv4> <your current networking interface>
+$ hmdl -d <facebookIPv4> <your current networking interface>
 ```
 After this command IPv4 www.facebook.com should be unblocked <br>
 You can check it with ping <br>
@@ -44,5 +44,5 @@ You can check it with ping <br>
 ---
 Move to ther root of project <br>
 ```bash
-python3 uninstall.py
+$ python3 uninstall.py
 ```
