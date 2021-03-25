@@ -215,7 +215,7 @@ def main():
     inf_nm = conf['u_itf']['name']
 
     log += "make: " + subprocess.check_output(["make"]).decode("utf-8").strip() + "\n"
-    log += "ip link set dev enp2s0 xdp off: " + \
+    log += f"ip link set dev {inf_nm} xdp off: " + \
            subprocess.check_output(["ip", "link", "set", "dev", inf_nm, "xdp", "off"]) \
                      .decode("utf-8").strip() + "\n"
 
