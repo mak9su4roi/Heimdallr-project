@@ -6,7 +6,8 @@
 
 [![git](media/heimdallr_s.png)][1]
 ---
-Reqiremnts:
+## Reqiremnts:
+---
 * `python3`
 * `pandas`
 (installed as root) 
