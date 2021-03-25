@@ -1,10 +1,9 @@
-from os import path, chdir
+from os import path, getcwd
 
 
 def main():
     rc_path = path.expanduser("~") + "/.bashrc"
-    project_root = path.dirname(__file__)
-    chdir(project_root)
+    project_root = getcwd()
 
     required = f"alias hmdl='sudo python3 {project_root}/heimdallr.py'"
     with open(rc_path, mode="r", encoding="UTF-8") as rc:

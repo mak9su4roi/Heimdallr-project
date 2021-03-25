@@ -176,8 +176,13 @@ def run_with_sudo():
 
 
 def main():
+    if len(argv) == 1:
+        print("Heimdallr-project by @m-shiroi")
+        return 0
+
     if not run_with_sudo():
         return 0
+
     interfaces = {el.split(": ")[1]: int(el.split(": ")[0])
                   for el in re.findall(r'\d: [\w\d-]+', subprocess.check_output(["ip", "addr"]).decode("utf-8"))}
 
