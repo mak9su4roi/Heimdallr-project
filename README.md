@@ -8,9 +8,8 @@
 # git clone https://github.com/m-shiroi/Heimdallr-project .
 # make
 # cd prg
-# ./monitor-exec
-# cd ..
-# ./map <IPv4> <mask> <option>
+# python3 util.py
+# python3 util.py --set <index of your active network interface>
+# python3 util.py --launch
+# python3 util.py --help
 ```
- * <option>: a (add new IPv4), b (drop IPv4 if pressent)
- <IPv4> and <mask> should be provided correctly !) 
