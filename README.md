@@ -27,8 +27,17 @@ $ sudo su
 # python3 util.py --block 8.8.8.8
 ```
 ### Check sing IPv4
-```
+```bash
 # ping 8.8.8.8
+```
+### Check short command description
+```bash
 # python3 util.py --help
 ```
+...
+### Detach
+```bash
+# python3 util.py --detach
+```
+
 
