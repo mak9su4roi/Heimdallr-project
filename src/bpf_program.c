@@ -49,7 +49,7 @@ int xdp_tx(struct xdp_md *ctx)
   step += sizeof(struct iphdr);
 
   // check if there is anything else in buffer or ip header does not
-  // exceeds the buffer limits
+  // exceed the buffer limits
   if (data + step > data_end) goto drop;
   trie_key key =
   {
