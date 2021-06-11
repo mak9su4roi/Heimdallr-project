@@ -71,7 +71,7 @@ python3 bench.py
 ```
 ### Bandwidth test
 ```bash
-python3 hmdl.py -B
+python3 bench.py -B
 ```
 * Open other terminal window and run:
 ```bash
