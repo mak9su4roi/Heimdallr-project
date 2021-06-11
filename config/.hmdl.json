@@ -1,6 +1,6 @@
 {
     "cashed": false,
-    "device": 2,
+    "device": 3,
     "data": "${loc}.hmdl.csv",
     "util": "${loc}../prg/map_util",
     "launcher": "${loc}../prg/launcher",

@@ -4,11 +4,7 @@ from os import path, mkdir, chdir
 from numpy import mean
 from pkg import ip2csv, IPTables, XDP, ploter
 from config import config
-from multiprocessing import Process
-from time import sleep
 import json
-import threading
-import os
 
 
 def get_ping(firewall, ind, conf):

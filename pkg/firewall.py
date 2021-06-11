@@ -3,6 +3,7 @@ import subprocess
 import pandas as pd
 import hmdl
 
+
 class Firewall:
     test_ext = ".csv"
     test_header = "IPv4"
@@ -90,7 +91,7 @@ class XDP(Firewall):
     def __init__(self, ips: list, **kwargs):
         super().__init__(ips, **kwargs, prefix=self.prefix, rule_ext=self.rule_ext)
         self.config = hmdl.conf
-        self.xdp = hmdl.Hmdl(self.config)
+        self.xdp = hmdl.Hmdl(hmdl.Conf(self.config))
 
     def _save_rules(self):
         self.xdp.data.db.to_csv(self.old_rules, index=False)
