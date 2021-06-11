@@ -1,10 +1,10 @@
 {
 	"old_name": "former",
-	"rules": [10, 100, 1000, 10000, 100000, 1000000],
+	"rules": [10, 100, 1000, 10000],
 	"ping_ip": "www.facebook.com",
 	"ping_interval": 0.001,
 	"device": 2,
-	"ping_rate": 100,
+	"ping_rate": 10,
 	"iterations": 10,
 	"mask_distribution": "20:0.001,22:0.001,24:0.02,27:0.05,29:0.1,30:0.3,31:0.4",
 	"first_octet": "200",
