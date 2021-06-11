@@ -98,7 +98,7 @@ class Hmdl:
 
     def __init__(self, config):
         self.data = Data(config['data'])
-        self.conf = Conf(config)
+        self.conf = config
 
     def show(self, *_):
         for ind, iff in self.conf.itf.items():
