@@ -65,6 +65,23 @@ python3 hmdl.py -D
 ```
 ---
 ## Benchmarking
+### Test configuration
+```json
+{
+	"old_name": "former", #name for file to store firewall former rules in
+	"rules": [10, 100, 1000, 10000], #number of rules to test
+	"ping_ip": "www.facebook.com", #address fro latency test
+	"ping_interval": 0.001, #ping -i flag
+	"device": 2, #networking device
+	"ping_rate": 10, #ping -c flag
+	"iterations": 10, #number of iterations
+	"mask_distribution": "20:0.001,22:0.001,24:0.02,27:0.05,29:0.1,30:0.3,31:0.4", #distribution of randomly generated ips
+	"first_octet": "200", #firs harcoded octet of randomly generated ips
+	"test_dir": "other", #name for directory to save benchmarking data in
+	"other_name": "other.dat"
+}
+```
+
 ### Latency test
 ```bash
 python3 bench.py
