@@ -5,7 +5,6 @@ from functools import reduce
 from sys import argv
 from subprocess import check_output
 from ifaddr import get_adapters
-import json
 
 IP_LEN = 32
 CONFIG_FILE = ".hmdl.json"

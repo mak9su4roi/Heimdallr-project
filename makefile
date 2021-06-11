@@ -24,19 +24,33 @@ MAP_INC = $(INC_DIR)/common.h $(INC_DIR)/map_driver.h
 
 XDP_TOOLS = $(XDP) $(LDR) $(MAP)
 
+ifeq ($(CASH),TRUE)
+  cash = -DHEIMDALLR_CASH
+else
+  cash = ""
+endif
+
+ifeq ($(DEBUG),TRUE)
+  debug = -DHEIMDALLR_DEBUG
+else
+  debug = ""
+endif
+
+DEFINES = $(debug) $(cash)
+
 all: $(PRG_DIR) $(XDP_TOOLS)
 
 $(PRG_DIR):
 		mkdir -p $(PRG_DIR)
 
 $(MAP): $(MAP_SRC) $(INC_DIR)
-		$(CC) $(MAP_SRC) $(I_PATH) $(U_LIBS) -o $@
+		$(CC) $(MAP_SRC) $(I_PATH) $(U_LIBS) $(DEFINES) -o $@
 
 $(XDP): $(XDP_SRC)
-		$(CC) -O2 -target bpf $(I_PATH) -c $^ -o $@
+		$(CC) -O2 -target bpf $(I_PATH) $(DEFINES) -c $^ -o $@
 
 $(LDR): $(LDR_SRC)
-		$(CC) $(CFLAGS) $^ $(I_PATH) $(U_LIBS) $(L_PATH) -o $@
+		$(CC) $(CFLAGS) $^ $(I_PATH) $(U_LIBS) $(L_PATH) $(DEFINES) -o $@
 
 .PHONY: clean
 

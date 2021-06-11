@@ -12,15 +12,16 @@
 #include <bpf/libbpf.h>
 #include <net/if.h>
 #include <linux/if_link.h>
+#include "common.h"
 
-#define CHECK_FAIL(condition) ({					                \
-	int __ret = !!(condition);					                    \
+#define CHECK_FAIL(condition) ({					                  \
+	int __ret = !!(condition);					                      \
 	int __save_errno = errno;					                      \
-	if (__ret) {							                              \
-		fprintf(stdout, "%s:FAIL:%d\n", __func__, __LINE__);	\
-	}								                                        \
-	errno = __save_errno;						                        \
-	__ret;								                                  \
+	if (__ret) {							                          \
+		fprintf(stdout, "%s:FAIL:%d\n", __func__, __LINE__);	      \
+	}								                                  \
+	errno = __save_errno;						                      \
+	__ret;								                              \
 })
 
 
@@ -71,15 +72,17 @@ int xdp_link_attach(int ifindex, __u32 xdp_flags, int prog_fd)
 }
 
 int main(int argc, char **argv) {
-	const char *file = "bpf_program.o";
-	struct bpf_object *obj;
-	int err, prog_fd, trie_map_fd, hash_map_fd, ifindex;
-
-  if (argc - 1 != 1)
+  if (argc < 2+1)
   {
-    fprintf(stderr, "No interface provided\n");
-    return -1;
+#ifdef HEIMDALLR_DEBUG
+    printf("Not enough args: %d\n", argc);
+#endif
+    return 0;
   }
+
+	const char *file = argv[2];
+	struct bpf_object *obj;
+	int err, prog_fd, trie_map_fd, hash_map_fd, cash_map_fd, ifindex;
 
   sscanf(argv[1], "%d", &ifindex);
 
@@ -91,10 +94,25 @@ int main(int argc, char **argv) {
   printf("Trie map fd is: %d\n", trie_map_fd);
 
   hash_map_fd = bpf_object__find_map_fd_by_name(obj, "hash_map");
-  printf("Trie map fd is: %d\n", hash_map_fd);
+  printf("Hash map fd is: %d\n", hash_map_fd);
 
-	bpf_obj_pin(trie_map_fd, "/sys/fs/bpf/trie_map");
-  bpf_obj_pin(hash_map_fd, "/sys/fs/bpf/hash_map");
+#ifdef HEIMDALLR_CASH
+  cash_map_fd = bpf_object__find_map_fd_by_name(obj, "cash_map");
+  printf("Cash map fd is: %d\n", cash_map_fd);
+#endif
+
+  char trie_path[100];
+  sprintf(trie_path, "/sys/fs/bpf/trie_map_%d", ifindex);
+  bpf_obj_pin(trie_map_fd, trie_path);
+
+  char hash_path[100];
+  sprintf(hash_path, "/sys/fs/bpf/hash_map_%d", ifindex);
+  bpf_obj_pin(hash_map_fd, hash_path);
+
+#ifdef HEIMDALLR_CASH
+  bpf_obj_pin(cash_map_fd, "/sys/fs/bpf/cash_map");
+#endif
+
 	if (CHECK_FAIL(err))
 		return -1;
 

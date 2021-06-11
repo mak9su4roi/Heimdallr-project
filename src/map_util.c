@@ -1,4 +1,5 @@
 #include "common.h"
+#include <stdio.h>
 #include "map_driver.h"
 
 #define DEBUG
@@ -25,8 +26,23 @@ map_data data;
 int main(int  argc,
          char **argv)
 {
+  if (argc < 2+1)
+  {
+#ifdef HEIMDALLR_DEBUG
+    printf("Not enough args: %d\n", argc);
+#endif
+    return 0;
+  }
+
   map_driver driver;
-  map_driver_init(&driver, khash_path, ktrie_path, argv[1]);
+
+  char trie_path[100];
+  sprintf(trie_path, "%s_%s",ktrie_path, argv[1]);
+
+  char hash_path[100];
+  sprintf(hash_path, "%s_%s",khash_path, argv[1]);
+
+  map_driver_init(&driver, hash_path, trie_path, argv[1]);
   switch (argv[2][0])
   {
     case 'A':
@@ -49,9 +65,11 @@ int main(int  argc,
     case 's': driver.show_cash(&driver);
       break;
 
+#ifdef HEIMDALLR_CASH
     case 'C':
     case 'c': driver.clear_cash(&driver);
       break;
+#endif
 
     case 'E':
     case 'e': driver.detach(&driver);

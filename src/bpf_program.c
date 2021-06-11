@@ -8,8 +8,10 @@
 #include "common.h"
 
 #define SEC(NAME) __attribute__((section(NAME), used))
-#define MAX_TRIES 10000
-#define MAX_HASH  10000
+#define MAX_TRIES 1000000
+#define MAX_HASH  1000000
+#define MAX_CASH  100
+
 
 struct bpf_map_def SEC("maps") trie_map = {
       .type        = BPF_MAP_TYPE_LPM_TRIE,
@@ -26,6 +28,16 @@ struct bpf_map_def SEC("maps") hash_map = {
     .max_entries = MAX_HASH,
     .map_flags   = 0
 };
+
+#ifdef HEIMDALLR_CASH
+struct bpf_map_def SEC("maps") cash_map = {
+    .type        = BPF_MAP_TYPE_HASH,
+    .key_size    = sizeof(__u32),
+    .value_size  = sizeof(__u32),
+    .max_entries = MAX_CASH,
+    .map_flags   = 0
+};
+#endif
 
 SEC("tx")
 int xdp_tx(struct xdp_md *ctx)
@@ -50,7 +62,7 @@ int xdp_tx(struct xdp_md *ctx)
 
   // check if there is anything else in buffer or ip header does not
   // exceed the buffer limits
-  if (data + step > data_end) goto drop;
+  if (data + step > data_end) goto invalid;
   trie_key key =
   {
       .prefixlen = 32,
@@ -63,20 +75,48 @@ int xdp_tx(struct xdp_md *ctx)
   // check if IPv4 is allowed
   if (value && *value == PASS_RULE) goto pass;
 
+#ifdef HEIMDALLR_CASH
+  value = bpf_map_lookup_elem(&cash_map, &(ip->saddr));
+  // check if IPv4 is either forbidden as a single or forbidden as cashed entry
+  if (value && ((*value)&DROP_RULE) == DROP_RULE) goto drop;
+  // check if IPv4 is allowed
+  if (value && *value == PASS_RULE) goto pass;
+#endif
+
   value = bpf_map_lookup_elem(&trie_map, &key);
   // check if IPv4 is in forbidden range
   if (value && *value == DROP_RULE)
   {
-    // Cashing IPv4
-    __u32 cash = DROP_CASH;
-    bpf_map_update_elem(&hash_map, &(ip->saddr), &cash, BPF_ANY);
+#ifdef HEIMDALLR_CASH // Cashing IPv4
+    __u32 cash = DROP_RULE;
+    bpf_map_update_elem(&cash_map, &(ip->saddr), &cash, BPF_ANY);
+#endif
     goto drop;
   }
 
 pass:
+#ifdef HEIMDALLR_DEBUG
+  {
+    __u32 ipv4 = ip->saddr;
+    bpf_printk("PASSED: %x on iff: %d", ipv4, ctx->ingress_ifindex);
+  }
+#endif
   return XDP_PASS;
+
 drop:
+#ifdef HEIMDALLR_DEBUG
+  {
+    __u32 ipv4 = ip->saddr;
+    bpf_printk("DROPPED: %x on iff: %d", ipv4, ctx->ingress_ifindex);
+  }
+#endif
+  return XDP_DROP;
+
+invalid:
   return XDP_DROP;
 }
+
+
+
 
 char _license[] SEC("license") = "GPL";

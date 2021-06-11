@@ -1,0 +1,11 @@
+{
+    "cashed": false,
+    "device": 2,
+    "data": "${loc}.hmdl.csv",
+    "util": "${loc}../prg/map_util",
+    "launcher": "${loc}../prg/launcher",
+    "xdp": "${loc}../prg/bpf_program.o",
+    "hash": "/sys/fs/bpf/hash_map_${iff}",
+    "trie": "/sys/fs/bpf/trie_map_${iff}",
+    "cash": "/sys/fs/bpf/cash_map_${iff}"
+}
