@@ -13,6 +13,21 @@ Linux:
 * glibc
 ---
 ### How to test
+* create new virtualenv
+```bash
+   $ virtualenv .venv
+```
+
+* activate virtualenv
+```bash
+   $ source .venv/bin/activate
+```
+
+* load dependencies
+```bash
+   $ pip install -r requirements.txt
+```
+
 ```bash
 $ git clone https://github.com/m-shiroi/Heimdallr-project .
 $ make
