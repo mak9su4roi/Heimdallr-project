@@ -20,12 +20,12 @@ Linux:
 
 * activate virtualenv
 ```bash
-   $ source .venv/bin/activate
+   # source .venv/bin/activate
 ```
 
 * load dependencies
 ```bash
-   $ pip install -r requirements.txt
+   # pip install -r requirements.txt
 ```
 
 ```bash
