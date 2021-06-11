@@ -10,9 +10,13 @@ Linux:
 ---
 ## Clone && Build
 ```bash
-$ git clone https://github.com/m-shiroi/Heimdallr-project .
-$ make
-$ sudo su
+git clone https://github.com/m-shiroi/Heimdallr-project .
+```
+```bash
+make
+```
+```bash
+sudo su
 ```
 ---
 ## SetUp environment
