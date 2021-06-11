@@ -63,5 +63,20 @@ python3 hmdl.py --help
 ```bash
 python3 hmdl.py -D
 ```
+---
+## Benchmarking
+### Latency test
+```bash
+python3 bench.py
+```
+### Bandwidth test
+```bash
+python3 hmdl.py -B
+```
+* Open other terminal window and run:
+```bash
+python3 iperf.py
+```
+
 
 
