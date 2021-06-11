@@ -17,22 +17,32 @@ $ sudo su
 ### How to test
 * create new virtualenv
 ```bash
-   $ virtualenv .venv
+   virtualenv .venv
 ```
 
 * activate virtualenv
 ```bash
-   # source .venv/bin/activate
+   source .venv/bin/activate
 ```
 
 * load dependencies
 ```bash
-   # pip install -r requirements.txt
+   pip install -r requirements.txt
+```
+
+### Set networking device
+```bash
+   python3 hmdl.py -s 2
+```
+
+### Attach firewall
+```bash
+   python3 hmdl.py -A
 ```
 
 ### Block single IPv4
 ```bash
-# python3 util.py --block 8.8.8.8
+   python3 hmdl.py -d 8.8.8.8
 ```
 ### Check sing IPv4
 ```bash
@@ -40,12 +50,12 @@ $ sudo su
 ```
 ### Check short command description
 ```bash
-# python3 util.py --help
+# python3 hmdl.py --help
 ```
 ...
 ### Detach
 ```bash
-# python3 util.py --detach
+# python3 hmdl.py -D
 ```
 
 
