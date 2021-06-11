@@ -152,7 +152,7 @@ class Hmdl:
         ip_sr = pd.Series([ipv4.ip, ipv4.mask, self.rules["pass"], self.conf["device"]], index=HEADER)
         duplicate = self.data.get_duplicate(ipv4.ip, self.conf["device"], ipv4.mask)
 
-        if not duplicate:
+        if duplicate is None:
             print(f"There is no such rule: {ipv4.ip}/{ipv4.mask}")
             return
 
