@@ -75,7 +75,7 @@ python3 bench.py -B
 ```
 * Open other terminal window and run:
 ```bash
-python3 iperf.py
+python3 iperf.py <your IPv4 address>
 ```
 
 
